@@ -1,5 +1,7 @@
 This is the final part of the trilogy: Combining the Superstore data into a dashboard on Tableau by joining various tables. I have split them into various worksheets and there are 5 dashboards in total with an addition of a story point at the end.
 
+This is the link to Tableau Public: https://public.tableau.com/views/Niithiya_Superstore/SUPERSTOREANALYSIS?:language=en-US&:display_count=n&:origin=viz_share_link 
+
 Worksheet 1: Region & month
 
 -	Added a parameter (choose sum of profits or sales) 
