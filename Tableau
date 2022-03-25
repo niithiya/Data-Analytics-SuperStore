@@ -1,0 +1,67 @@
+This is the final part of the trilogy: Combining the Superstore data into a dashboard on Tableau by joining various tables. I have split them into various worksheets and there are 5 dashboards in total with an addition of a story point at the end.
+
+Worksheet 1: Region & month
+
+-	Added a parameter (choose sum of profits or sales) 
+-	Order Date Month broken down by Region. 
+-	Colour shows details about Region. 
+
+Worksheet 2: Sales & Profit by region
+-	Applied region and category to columns
+-	Added a parameter (p.choose sum of profits or sales) to toggle between them in the same bar chart
+
+Worksheet 3: Top Salespersons
+
+-	Applied the INDEX of “Top 3 Salespersons by Region” to identify the sum of profits and quantity of products sold
+
+Dashboard 1: Overall Profits
+-	Based on Worksheets 1-3
+
+Worksheet 4:Profit by regions and country
+-	Utilized a map to see a comparison of profits across APAC and EMEA
+-	Applied a diverging colour scheme (red-blue) to identify the varying levels of profit and applied order date(year) to see the changes in profits from 2015 to 2020
+
+Dashboard 2: Comparison of Regions
+-	Based on Worksheet 4
+
+Worksheet 5: Top 5 profitable countries in APAC
+-	Used a scatter plot to show the diverging differences in terms of profits and discounts among the top 5 countries in APAC
+
+
+Worksheet 6: Top 10 profitable products in <region>
+-	Imposed a limit among the top 10 by sum of profits to identify the top 10 profitable products.
+-	Compared among the sum of ‘profits’, ‘discount’ and ‘quantity’ sold to compare among the regions as well
+-	Primary focus is on APAC region
+
+
+Dashboard 3: Regional Analysis
+-	Based on Worksheets 5-6
+
+
+Worksheet 7: No. of quantities APAC
+-	Created a pie chart to  identify the no.of products sold in the APAC region by looking closer into the sub-region in APAC	
+-	Color-coded the various sub-regions in APAC to identify that Oceania has the highest volume and Central Asia has the lowest
+
+
+Worksheet 8: APAC profit margin performance
+-	Sum of Product-Cost-To-Consumer  and discounts for each Sub-Category 
+-	Profit Margin Performance (‘ok’, ‘good’, ‘bad’) is imposed to identify how each sub-category performs and to identify which sub-category to eliminate and which discounts to improve
+
+Dashboard 4: APAC insights I
+-	Based on Worksheets 7-8
+
+Worksheet 9: APAC shipping performance and returns
+-	Sum of Profit lost for each Category broken down by shipping performance (time taken to ship out products) and count of returns. 
+-	Colour shows details about Category. The view is filtered on Region, which keeps APAC.
+
+Worksheet 10: Reason for returns in APAC
+-	Created a scatter plot by comparing sub-regions in APAC and their profits lost against the no. of return quantity
+-	Looked into reasons returned by restricting to ‘wrong colour’ and ‘wrong item’ to analyse to what extent is it Superstore’s mistake and what is the effect of that
+
+Dashboard 5: APAC insights II
+-	Based on Worksheets 9-10
+
+
+Creation of a story: Superstore analysis
+-	Based on Dashboards 1-5
+-	Macro to Micro approach
