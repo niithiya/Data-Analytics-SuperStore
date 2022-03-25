@@ -1,0 +1,113 @@
+Problem Statement: The Regional Sales Director of Superstore would like to know which product segment and which customer segment are performing the best and why. Conduct an analysis to identify the best-performing product segment and make data-driven recommendations based on orders, customers, product categories, and returns. These were some queries used to eventually convey into a presentation.
+
+
+# Identifying customer segment that made most sales
+
+SELECT c.segment, ROUND (SUM(o.sales),2) AS s
+FROM orders AS o
+LEFT JOIN products AS p ON o.product_id= p.product_id
+LEFT JOIN customers AS c ON o.customer_id= c.customer_id
+GROUP BY c.segment;
+
+# Identifying factors that affected customer segments sales
+
+SELECT c.segment, SUM(o.sales) AS s, o.ship_mode
+FROM orders AS o
+LEFT JOIN products AS p ON o.product_id= p.product_id
+LEFT JOIN customers AS c ON o.customer_id= c.customer_id
+WHERE c.segment LIKE 'Consumer'
+GROUP BY c.segment, o.ship_mode
+order by s DESC;
+ 
+ 
+# If days to ship affected sales and quantity of products returned
+
+SELECT p.sub_category, 
+p.product_name, 
+COUNT (o.quantity) AS number_of_products_returned,
+ROUND (SUM(o.sales),2) AS loss_of_total_sales,
+DATE_PART('day', ship_date::timestamp - order_date::timestamp) AS time_to_ship,
+
+CASE 
+WHEN DATE_PART('day', ship_date::timestamp - order_date::timestamp) <=2 THEN 'fast'
+WHEN DATE_PART('day', ship_date::timestamp - order_date::timestamp) <=5 THEN 'medium'
+else 'slow'
+END AS shipping_categories
+
+FROM orders AS o
+INNER JOIN products AS p
+ON p.product_id=o.product_id
+INNER JOIN returns AS r
+ON o.order_id=r.order_id
+
+GROUP BY p.sub_category, p.product_name, time_to_ship
+ORDER BY  loss_of_total_sales DESC
+limit 50;
+
+# Returns Across Categories AND COUNTRIES OUTSIDE OF THE US
+
+ SELECT  
+p.category, 
+c.segment,
+reg.country,
+o.ship_mode,
+SUM(o.sales) AS total_sales
+
+FROM orders AS o
+INNER JOIN returns AS r on o.order_id=r.order_id
+inner join products as p on o.product_id=p.product_id
+inner join customers as c on o.customer_id= c.customer_id
+inner join regions as reg on o.region_id= reg.region_id
+
+WHERE reg.country NOT ILIKE 'UNITED STATES'
+
+GROUP BY p.category, c.segment, reg.country, o.ship_mode
+order by total_sales DESC
+limit 10;
+
+
+# Identifying the factor for the high sales in returns. Could salesperson be a factor. Joining 'region' table with orders.
+
+SELECT 
+
+CASE
+when r.salesperson IS NULL THEN 'Unknown' 
+ELSE r.salesperson
+END AS list_of_salespersons,
+
+COUNT (DISTINCT o.order_id) as count_order, 
+SUM (distinct sales) AS total_sales
+
+FROM orders AS o
+LEFT JOIN regions AS r ON o.region_id=r.region_id
+LEFT JOIN customers AS c ON o.customer_id = c.customer_id
+LEFT JOIN returns AS ret ON o.order_id=ret.order_id
+
+WHERE c.segment = 'Consumer'
+
+GROUP BY r.salesperson, c.segment
+ORDER BY total_sales DESC
+
+# Identifying the returns in terms of loss of sales, profit and product category
+
+SELECT p.category, COUNT(o.order_id) as orders_returned, 
+SUM(o.sales) as total_sales, 
+
+CASE
+WHEN o.profit <=0.2 THEN 'low profit'
+when o.profit <=0.35 THEN 'medium profit'
+when o.profit<= 0.5 THEN 'high profit'
+ELSE 'Clearance'
+END AS profit_categories,
+r.reason_returned
+
+FROM orders AS o
+INNER JOIN returns AS r
+USING (order_id)
+INNER JOIN products AS p
+USING (product_id)
+
+GROUP BY profit_categories, reason_returned, p.category
+ORDER BY profit_categories, orders_returned DESC
+LIMIT 10;
+
