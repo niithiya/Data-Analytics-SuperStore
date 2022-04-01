@@ -7,6 +7,8 @@ product categories, and returns.
 
 Appended to this repository are files related to Excel, SQL and Tableau.
 
+Link to Tableau: https://public.tableau.com/views/Niithiya_Superstore/SUPERSTOREANALYSIS?:language=en-US&:display_count=n&:origin=viz_share_link 
+
 # Excel_Superstore
 Firstly, I had to wrangle and prepare the data in Excel. Cleaned the data as appropriate by removing duplicates, addressing nulls, and reformatting data types (e.g., string to date), selected only the columns that will be used in my analysis, added new columns for categorical or numerical data as appropriate using other features.
 
